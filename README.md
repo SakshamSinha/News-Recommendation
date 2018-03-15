@@ -11,3 +11,10 @@ Open the project in IDE and run the test. If using pycharm-
 * Right click on `class TestDataRetrieval(TestCase):`
 * Select run.
 
+Inorder to run DJango server- 
+--
+* Goto terminal and in the directory adaptiveapp/newsrecomapp and type
+`python3 manage.py runserver`
+
+This should run the django server. You can access it on -
+`localhost:8000`
