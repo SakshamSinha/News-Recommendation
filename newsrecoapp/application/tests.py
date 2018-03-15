@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from unittest import TestCase
-from retrieval.data_retrieval import NewsRetrieval
+from newsrecoapp.application.retrieval.data_retrieval import NewsRetrieval
 # Create your tests here.
 
 
@@ -12,4 +12,5 @@ class TestDataRetrieval(TestCase):
     def test_newsapi(self):
         """Check the connectivity using the newsapi key."""
         dataRetrieval = NewsRetrieval()
+        print(dataRetrieval)
         self.assertTrue(dataRetrieval.check_connectivity_using_key())

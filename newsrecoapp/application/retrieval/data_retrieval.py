@@ -1,4 +1,4 @@
-from config_import import get_private_config
+from newsrecoapp.application.retrieval.config_import import get_private_config
 import requests
 import logging
 
@@ -46,6 +46,7 @@ class NewsRetrieval(DataRetrieval):
         the news information.
         """
         news = self.get_news_headlines()
+        print (news)
         if news is None:
             return False
         return True
