@@ -1,4 +1,4 @@
-from newsrecoapp.application.retrieval.config_import import get_private_config
+from newsrecoapp.application.config_import import get_private_config
 import requests
 import logging
 
@@ -21,7 +21,7 @@ class DataRetrieval(object):
         return response.json(encoding='utf-8')
 
     def get_news_headlines(self):
-        """Retrieve the list of contracts from the API."""
+        """Retrieve the list of news headlines from the API."""
         url = self.NEWS_URL["headlines"].format(api_key=self.news_apikey)
         return self.get_json_from_url(url)
 
