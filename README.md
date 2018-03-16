@@ -1,4 +1,4 @@
-Adaptive Applicatoin
+Adaptive Application
 ==
 This is related to Addaptive application. 
 Requires Django 1.11.11 or 2.0.x , Python 3.5, Textrazor and requests package to be installed.
@@ -13,7 +13,7 @@ To install TextRazor
 To test News Retrieval
 --
 Open the project in IDE and run the test. If using pycharm-
-* Goto newsrecomapp/application/tests.py
+* Goto newsrecoapp/application/tests.py
 * Right click on `class TestDataRetrieval(TestCase):`
 * Select run.
 
@@ -27,7 +27,7 @@ Open the project in IDE and run the test. If using pycharm-
 
 Inorder to run DJango server- 
 --
-* Goto terminal and in the directory adaptiveapp/newsrecomapp and type
+* Goto terminal and in the directory adaptiveapp/newsrecomapp type
 `python3 manage.py runserver`
 
 This should run the django server. You can access it on -
