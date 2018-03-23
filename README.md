@@ -44,3 +44,10 @@ Browse to localhost:8000/admin
 
 Username: cs7is5
 password: adaptive
+
+To run celery server to run periodic tasks:
+```
+/adaptiveapp/newsrecoapp$ celery -A newsrecoapp worker -B --loglevel=info
+```
+This will run the periodic_update_news() task in tasks.py, perform analysis and insert the news in table.
+

@@ -12,18 +12,9 @@ from application.extractor.textrazor import Extraction
 from application.models import NewsModel
 from application.retrieval.data_retrieval import NewsRetrieval
 
-# app = Celery('tasks', broker='pyamqp://guest@localhost//')
 
 @shared_task
 def periodic_update_news():
-    # title = ""
-    # description = ""
-    # trend_factor = 0.0
-    # categories = ""
-    # keywords = ""
-    # url = ""
-    # author = ""
-    # publishedAt = ""
     categories = []
     topics = []
     entities = []
@@ -60,6 +51,4 @@ def periodic_update_news():
                 keywords=keywords
         )
     print("Done adding the news")
-
-periodic_update_news()
 
