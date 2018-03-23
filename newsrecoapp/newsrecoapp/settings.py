@@ -114,6 +114,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_ENABLE_UTC = True
+CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

@@ -1,4 +1,4 @@
-from newsrecoapp.application.config_import import get_private_config
+from application.config_import import get_private_config
 import requests
 import logging
 

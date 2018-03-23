@@ -1,5 +1,5 @@
-from newsrecoapp.application.config_import import get_private_config
-from newsrecoapp.application.retrieval.data_retrieval import NewsRetrieval
+from application.config_import import get_private_config
+from application.retrieval.data_retrieval import NewsRetrieval
 import requests
 import logging
 import textrazor
@@ -23,13 +23,31 @@ class TextExtractor(object):
             return None
         return response.json(encoding='utf-8')
 
-    def get_news_topics(self, text):
+    def get_news_statistics(self, text):
         """Retrieve the list of topics(keywords) from the API for the given text."""
         textrazor.api_key = self.textrazor_apikey
-        client = textrazor.TextRazor(extractors=["topics"])
+        client = textrazor.TextRazor(extractors=["topics","entities"])
         client.set_classifiers(["textrazor_newscodes"])
         response = client.analyze(text)
-        return response.categories()
+        if len(response.topics())==0 and len(response.entities())==0 and len(response.categories())==0:
+            return None
+        return response
+
+    # def get_news_topics(self, text):
+    #     """Retrieve the list of topics(keywords) from the API for the given text."""
+    #     textrazor.api_key = self.textrazor_apikey
+    #     client = textrazor.TextRazor(extractors=["topics"])
+    #     client.set_classifiers(["textrazor_newscodes"])
+    #     response = client.analyze(text)
+    #     return response.categories()
+    #
+    # def get_news_entities(self, text):
+    #     """Retrieve the list of topics(keywords) from the API for the given text."""
+    #     textrazor.api_key = self.textrazor_apikey
+    #     client = textrazor.TextRazor(extractors=["topics"])
+    #     client.set_classifiers(["textrazor_newscodes"])
+    #     response = client.analyze(text)
+    #     return response.categories()
 
 class Extraction(TextExtractor):
     """Class Responsible to do analysis on news data."""
@@ -37,7 +55,7 @@ class Extraction(TextExtractor):
     def __init__(self):
         """Retrieve text razor api key."""
         super(TextExtractor, self).__init__()
-        self.textrazor_apikey = get_private_config()["textrazorapi_key"]
+        self.textrazor_apikey = get_private_config()["textrazorapi_key2"]
 
     def check_extraction_using_key(self):
         """

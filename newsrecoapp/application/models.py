@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import datetime
+from django.utils import timezone
+
 from django.db import models
 
 # Create your models here.
@@ -27,10 +30,11 @@ class NewsModel(models.Model):
     title = models.TextField()
     description = models.TextField()
     url = models.URLField()
-    author = models.CharField(max_length=50)
+    author = models.CharField(null=True,max_length=50)
     trend_factor = models.FloatField(null=True)
     categories = models.TextField(null=True)
     keywords = models.TextField(null=True)
+    published_at = models.DateTimeField(default=timezone.now())
 
 
 class NewsProfileModel(models.Model):
