@@ -36,3 +36,11 @@ python manage.py runserver
 
 This should run the django server. You can access it on -
 `localhost:8000`
+
+To access models-
+```
+Browse to localhost:8000/admin
+```
+
+Username: cs7is5
+password: adaptive
