@@ -47,6 +47,7 @@ def periodic_update_news():
                 description=description,
                 author=author,
                 url=url,
+                categories=categories,
                 published_at=publishedAt,
                 keywords=keywords
         )
