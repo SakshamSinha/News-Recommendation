@@ -3,6 +3,7 @@ from newsrecoapp.application.retrieval.data_retrieval import NewsRetrieval
 import requests
 import logging
 import textrazor
+import operator
 
 class TextExtractor(object):
     """Wrapper for data retrieval functionality."""
@@ -28,7 +29,7 @@ class TextExtractor(object):
         client = textrazor.TextRazor(extractors=["topics"])
         client.set_classifiers(["textrazor_newscodes"])
         response = client.analyze(text)
-        return response.topics()
+        return response.categories()
 
 class Extraction(TextExtractor):
     """Class Responsible to do analysis on news data."""
@@ -50,8 +51,7 @@ class Extraction(TextExtractor):
         news_headline = news.get_news_headlines()
         print(news_headline['articles'][1]['description'])
         keywords = super().get_news_topics(news_headline['articles'][1]['description'])
-        for keyword in keywords:
-            if keyword.score > 0.8:
+        for keyword in sorted(keywords,key=operator.attrgetter('score'), reverse=True)[:5]:
                 print(keyword.label)
         if keywords is None:
             return False
