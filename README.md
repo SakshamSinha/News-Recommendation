@@ -42,12 +42,12 @@ To access models-
 Browse to localhost:8000/admin
 ```
 
-Username: cs7is5
+Username: cs7is3
 password: adaptive
 
 To run celery server to run periodic tasks you need to install Celery and Rabbit-MQ and then run:
 ```
 /adaptiveapp/newsrecoapp$ celery -A newsrecoapp worker -B --loglevel=info
 ```
-This will run the periodic_update_news() task in tasks.py, perform analysis and insert the news in table.
+This will run the periodic_update_news() task in tasks.py, perform analysis and insert the news in table every 5 mins.
 
