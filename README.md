@@ -28,7 +28,11 @@ Open the project in IDE and run the test. If using pycharm-
 Inorder to run DJango server- 
 --
 * Goto terminal and in the directory adaptiveapp/newsrecomapp type
-`python3 manage.py runserver`
+```
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
 
 This should run the django server. You can access it on -
 `localhost:8000`
