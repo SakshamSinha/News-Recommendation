@@ -33,6 +33,33 @@ class TextExtractor(object):
             return None
         return response
 
+    def get_news_categories(self, response):
+        categories = ["economy, business and finance", "politics", "science and technology",
+                     "arts, culture and entertainment", "sport", "misc"]
+        news_type = []
+        for category in response.categories():
+            if ("general" in category.label or "sport" in category.label):
+                for cat in categories:
+                    if cat in category.label:
+                        news_type.append(cat)
+        if not news_type:
+            news_type.append("misc")
+        return(set(news_type))
+
+    def get_news_topics(self, response):
+        dict_topics = {}
+        for topic in response.topics:
+            dict_topics[topic.label] = topic.score
+        top_topics = sorted(dict_topics, key=dict_topics.get, reverse=True)[:10]
+        return(set(top_topics))
+
+    def get_news_entities(self, response):
+        dict_entities = {}
+        for entity in response.entities:
+            dict_entities[entity.id] = entity.relevance_score
+        top_entities = sorted(dict_entities, key=dict_entities.get, reverse=True)[:10]
+        return(set(top_entities))
+
     # def get_news_topics(self, text):
     #     """Retrieve the list of topics(keywords) from the API for the given text."""
     #     textrazor.api_key = self.textrazor_apikey
