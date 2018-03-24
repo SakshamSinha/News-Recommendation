@@ -35,13 +35,16 @@ def periodic_update_news():
             response = extract.get_news_statistics(title+" "+description)
         if response == None:
             continue
-        for category in sorted(response.categories(),key=operator.attrgetter('score'), reverse=True)[:5]:
-            categories.append(category.label)
-        for topic in sorted(response.topics(),key=operator.attrgetter('score'), reverse=True)[:5]:
-            topics.append(topic.label)
-        for entity in sorted(response.entities(),key=operator.attrgetter('relevance_score'), reverse=True)[:5]:
-            entities.append(entity.id)
-        keywords =topics + entities
+        #for category in sorted(response.categories(),key=operator.attrgetter('score'), reverse=True)[:5]:
+        #    categories.append(category.label)
+        #for topic in sorted(response.topics(),key=operator.attrgetter('score'), reverse=True)[:5]:
+        #    topics.append(topic.label)
+        #for entity in sorted(response.entities(),key=operator.attrgetter('relevance_score'), reverse=True)[:5]:
+        #   entities.append(entity.id)
+        categories = extract.get_news_categories(response)
+        topics = extract.get_news_topics(response)
+        entities = extract.get_news_entities(response)
+        keywords = set(topics + entities)
         NewsModel.objects.create(
                 title=title,
                 description=description,
