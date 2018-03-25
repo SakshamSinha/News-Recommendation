@@ -48,17 +48,17 @@ class TextExtractor(object):
 
     def get_news_topics(self, response):
         dict_topics = {}
-        for topic in response.topics:
+        for topic in response.topics():
             dict_topics[topic.label] = topic.score
         top_topics = sorted(dict_topics, key=dict_topics.get, reverse=True)[:10]
-        return(set(top_topics))
+        return(top_topics)
 
     def get_news_entities(self, response):
         dict_entities = {}
-        for entity in response.entities:
+        for entity in response.entities():
             dict_entities[entity.id] = entity.relevance_score
         top_entities = sorted(dict_entities, key=dict_entities.get, reverse=True)[:10]
-        return(set(top_entities))
+        return(top_entities)
 
     # def get_news_topics(self, text):
     #     """Retrieve the list of topics(keywords) from the API for the given text."""
