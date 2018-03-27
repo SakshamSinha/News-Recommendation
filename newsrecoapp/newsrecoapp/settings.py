@@ -122,3 +122,9 @@ CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Login redirect
+LOGIN_REDIRECT_URL = '/registration/success'
+
+#Extended User w/ Profile
+AUTH_PROFILE_MODULE = 'application.profile'
