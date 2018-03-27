@@ -5,6 +5,7 @@ from datetime import datetime
 from django.utils import timezone
 
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class UserModel(models.Model):
@@ -22,6 +23,17 @@ class UserProfileModel(models.Model):
                                        on_delete=models.CASCADE)
     static_prefs = models.CharField(max_length=150)
     dynamic_prefs = models.TextField(null=True)
+
+class UserStaticPrefs(models.Model):
+    """User Static Prefs Model"""
+
+    profileof_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    economy = models.BooleanField(default=False)
+    politics = models.BooleanField(default=False)
+    science = models.BooleanField(default=False)
+    arts = models.BooleanField(default=False)
+    sports = models.BooleanField(default=False)
+    misc = models.BooleanField(default=False)
 
 
 class NewsModel(models.Model):

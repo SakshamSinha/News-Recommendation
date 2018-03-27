@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<html>
+
+	<head>	
+		<link rel="stylesheet" href="{% static 'style/stylesheet.css' %}">
+	</head>
+
+	<body>
+		<div class="page-title">User Login</div>
+
+		{% block content %}
+		<div class="sign-in-form">
+			<form action="" method="post">
+			  	{% csrf_token %}
+    			{{ form.as_p }}
+			  	<input type="submit" value="Sign-in">
+			</form>
+		</div>
+		{% endblock %}
+	</body>
+
+</html>
