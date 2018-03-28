@@ -21,10 +21,10 @@
 {% if staticPrefs.economy is True %}
 <div class="outer">
   <div class="category" id="economy">
-    <h2>Economy</h2>
+    <h2>Economy Business and Finance</h2>
     <div class="news">
       <ul>
-        {% for news in Latest_news_list %}
+        {% for news in economy %}
         <li>
         
         <a href=""  >{{ news.title }}</a>
@@ -41,78 +41,115 @@
 
 <div class="outer">
   <div class="category">
-    <h2>Business and Finance</h2>
+    <h2>arts</h2>
     <div class="news">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-      text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-      It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-      with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+       <ul>
+        {% for news in arts %}
+        <li>
+        
+        <a href=""  >{{ news.title }}</a>
+        <p> {{news.description}}</p>
+        <button class="see-more-button">See More</button>
+
+        </li>        
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>
 
 <div class="outer">
   <div class="category">
-    <h2>Politics</h2>
+    <h2>science</h2>
     <div class="news">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-      text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-      It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-      with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+      <ul>
+        {% for news in science %}
+        <li>
+        
+        <a href=""  >{{ news.title }}</a>
+        <p> {{news.description}}</p>
+        <button class="see-more-button">See More</button>
+
+        </li>        
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>
 
 <div class="outer">
   <div class="category">
-    <h2>Science and Technology</h2>
+    <h2>politics</h2>
     <div class="news">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-      text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-      It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-      with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      <ul>
+        {% for news in politics %}
+        <li>
+        
+        <a href=""  >{{ news.title }}</a>
+        <p> {{news.description}}</p>
+        <button class="see-more-button">See More</button>
+
+        </li>        
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>
 
 <div class="outer">
   <div class="category">
-    <h2>Arts, Culture and Entertainment</h2>
+    <h2>culture</h2>
     <div class="news">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-      text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-      It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-      with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      <ul>
+        {% for news in culture %}
+        <li>
+        
+        <a href=""  >{{ news.title }}</a>
+        <p> {{news.description}}</p>
+        <button class="see-more-button">See More</button>
+
+        </li>        
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>
 
 <div class="outer">
   <div class="category">
-    <h2>Sport</h2>
+    <h2>sport</h2>
     <div class="news">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-      text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-      It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-      with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      <ul>
+        {% for news in sport %}
+        <li>
+        
+        <a href=""  >{{ news.title }}</a>
+        <p> {{news.description}}</p>
+        <button class="see-more-button">See More</button>
+
+        </li>        
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>
 
 <div class="outer">
   <div class="category">
-    <h2>Miscellaneous</h2>
+    <h2>misc</h2>
     <div class="news">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-      text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-      It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-      with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      <ul>
+        {% for news in misc %}
+        <li>
+        
+        <a href=""  >{{ news.title }}</a>
+        <p> {{news.description}}</p>
+        <button class="see-more-button">See More</button>
+
+        </li>        
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>

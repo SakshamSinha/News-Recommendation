@@ -30,9 +30,17 @@ class HomePageView(TemplateView):
 
 class BrowseView(TemplateView):
 	def get(request):
+		economy=NewsModel.objects.filter(categories__contains='economy')[:5]
+		politics=NewsModel.objects.filter(categories__contains='politics')[:5]
+		science=NewsModel.objects.filter(categories__contains='science')[:5]
+		arts=NewsModel.objects.filter(categories__contains='arts')[:5]
+		culture=NewsModel.objects.filter(categories__contains='culture')[:5]
+		sport=NewsModel.objects.filter(categories__contains='sport')[:5]
+		misc=NewsModel.objects.filter(categories__contains='misc')[:5]
 		Latest_news_list=NewsModel.objects.order_by('-title')[:1]
 		staticPrefs = models.UserStaticPrefs.objects.get(profileof_user = request.user.id)
-		return render(request, 'radhe.html', {'staticPrefs':staticPrefs, 'Latest_news_list': Latest_news_list})
+		return render(request, 'radhe.html', {'staticPrefs':staticPrefs,'arts':arts,'science':science,'politics':politics,'economy':economy,'misc':misc,'sport':sport,'culture':culture ,'Latest_news_list': Latest_news_list})
+
 
 class UserRegView(TemplateView):
 	def get(self, request, **kwargs):
