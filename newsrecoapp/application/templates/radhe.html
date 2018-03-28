@@ -4,6 +4,7 @@
   <title>News Recommendation System</title>
 
     <link rel="stylesheet" href="{% static 'style/radhe.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -14,9 +15,12 @@
 <div>Economy: {{staticPrefs.economy}}</div>
 {% endblock %}
 
+<button id="test">Test</button>
+<p id="message"></p>
+
 {% if staticPrefs.economy is True %}
 <div class="outer">
-  <div class="category">
+  <div class="category" id="economy">
     <h2>Economy</h2>
     <div class="news">
       <ul>
@@ -24,6 +28,8 @@
         <li>
         
         <a href=""  >{{ news.title }}</a>
+        <p> {{news.description}}</p>
+        <button class="see-more-button">See More</button>
 
         </li>        
         {% endfor %}
@@ -112,6 +118,34 @@
 </div>
 
 </body>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".see-more-button").click(function(event){
+    event.preventDefault();
+      $.ajax({
+        type:"POST",
+        url:"/testAjax/",
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(data){
+          $("#economy ul").empty();
+          var i;
+          for(i=0; i<data.length; i++){
+            var title = "<li><a href=\"\">" + data[i].fields.title + "</a>";
+            var description = "<p>" + data[i].fields.description + "</p>";
+            var button = "<button class=\"see-more-button\">See More</button></li>";
+
+            $("#economy ul").append(title,description,button);
+          }
+        }
+      });
+    });
+    return false;
+  });
+</script>
+
 </html>
 
 

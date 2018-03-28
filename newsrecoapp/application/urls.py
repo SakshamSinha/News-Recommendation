@@ -14,5 +14,7 @@ urlpatterns = [
 
    	url(r'^registration/profile$', views.update_profile, name="registration/profile"),
 
-   	url(r'^browse$', views.BrowseView.get, name="browse")
+   	url(r'^browse$', views.BrowseView.get, name="browse"),
+
+   	url(r'^testAjax/$', views.AjaxPosts.testpost, name="testAjax")
 ]

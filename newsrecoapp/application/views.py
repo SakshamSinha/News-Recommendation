@@ -7,17 +7,20 @@ from django.http import HttpResponse
 
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.models import UserManager
 from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.core import serializers
 
 from application import dbops
 from application import forms
 from application import models
 from application.models import NewsModel
+
+import json
 
 # Create your views here.
 
@@ -27,7 +30,7 @@ class HomePageView(TemplateView):
 
 class BrowseView(TemplateView):
 	def get(request):
-		Latest_news_list=NewsModel.objects.order_by('-title')[:10]
+		Latest_news_list=NewsModel.objects.order_by('-title')[:1]
 		staticPrefs = models.UserStaticPrefs.objects.get(profileof_user = request.user.id)
 		return render(request, 'radhe.html', {'staticPrefs':staticPrefs, 'Latest_news_list': Latest_news_list})
 
@@ -89,3 +92,19 @@ def update_profile(request):
 	return render(request, 'profile.html', {
 		'prefs_form': prefs_form
 	})
+
+class AjaxPosts(TemplateView):
+	def render_to_json_response(context):
+		data = json.dumps(context)
+		response_kwargs['content_type'] = 'application/json'
+		return HttpResponse(data, **response_kwargs)
+
+	def testpost(request):
+		if(request.is_ajax):
+			Latest_news_list=NewsModel.objects.order_by('-title')[:2]
+			context =  {'Latest_news_list': Latest_news_list}
+			data = serializers.serialize('json', Latest_news_list)
+			return HttpResponse(data, content_type='application/json')
+		else:
+			message = "fail"
+			return HttpResponse(message)
