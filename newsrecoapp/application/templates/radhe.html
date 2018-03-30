@@ -4,10 +4,23 @@
   <title>News Recommendation System</title>
 
     <link rel="stylesheet" href="{% static 'style/radhe.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<Style>
+  .fa
+  {
+  font-size= 400px;
+  cursor:pointer;
+  user-select:none;
+  }
+  .fa:hover{
+color:blue;
+    }
+</Style>
 </head>
 <body>
+
 
 <h1 class="header">News Recommendation System</h1>
 
@@ -27,14 +40,14 @@
         {% for news in economy %}
         <li>
         
-        <a href=""  >{{ news.title }}</a>
+        <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-        <button class="see-more-button">See More</button>
-
+         <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
         </li>        
         {% endfor %}
       </ul>
     </div>
+       <button class="see-more-button">See More</button>
   </div>
 </div>
 {% endif %}
@@ -47,14 +60,17 @@
         {% for news in arts %}
         <li>
         
-        <a href=""  >{{ news.title }}</a>
+        <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-        <button class="see-more-button">See More</button>
+             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+
+
 
         </li>        
         {% endfor %}
       </ul>
     </div>
+      <button class="see-more-button">See More</button>
   </div>
 </div>
 
@@ -67,14 +83,17 @@
         {% for news in science %}
         <li>
         
-        <a href=""  >{{ news.title }}</a>
+        <a href={{ news.url }} target="_blank">>{{ news.title }}</a>
         <p> {{news.description}}</p>
-        <button class="see-more-button">See More</button>
+             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+
+
 
         </li>        
         {% endfor %}
       </ul>
     </div>
+      <button class="see-more-button">See More</button>
   </div>
 </div>
 
@@ -86,14 +105,17 @@
         {% for news in politics %}
         <li>
         
-        <a href=""  >{{ news.title }}</a>
+        <a href={{ news.url }} target="_blank">>{{ news.title }}</a>
         <p> {{news.description}}</p>
-        <button class="see-more-button">See More</button>
+             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+
+
 
         </li>        
         {% endfor %}
       </ul>
     </div>
+      <button class="see-more-button">See More</button>
   </div>
 </div>
 
@@ -105,14 +127,17 @@
         {% for news in culture %}
         <li>
         
-        <a href=""  >{{ news.title }}</a>
+        <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-        <button class="see-more-button">See More</button>
+             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+
+
 
         </li>        
         {% endfor %}
       </ul>
     </div>
+      <button class="see-more-button">See More</button>
   </div>
 </div>
 
@@ -124,14 +149,17 @@
         {% for news in sport %}
         <li>
         
-        <a href=""  >{{ news.title }}</a>
+        <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-        <button class="see-more-button">See More</button>
+             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+
+
 
         </li>        
         {% endfor %}
       </ul>
     </div>
+       <button class="see-more-button">See More</button>
   </div>
 </div>
 
@@ -143,31 +171,41 @@
         {% for news in misc %}
         <li>
         
-        <a href=""  >{{ news.title }}</a>
+        <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-        <button class="see-more-button">See More</button>
+             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+
+
 
         </li>        
         {% endfor %}
       </ul>
     </div>
+      <button class="see-more-button">See More</button>
   </div>
 </div>
 
 </body>
 
 <script type="text/javascript">
+
+    function myfunction(x){
+
+    }
+
   $(document).ready(function() {
     $(".see-more-button").click(function(event){
     event.preventDefault();
       $.ajax({
         type:"POST",
-        url:"/testAjax/",
+        url:"/updateShowMore/",
         data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}'
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          newsId: event.target.id,
+          showMore: 1
         },
         success: function(data){
-          $("#economy ul").empty();
+          /*$("#economy ul").empty();
           var i;
           for(i=0; i<data.length; i++){
             var title = "<li><a href=\"\">" + data[i].fields.title + "</a>";
@@ -175,7 +213,10 @@
             var button = "<button class=\"see-more-button\">See More</button></li>";
 
             $("#economy ul").append(title,description,button);
-          }
+          }*/
+
+
+          alert(event.target.id);
         }
       });
     });
@@ -183,10 +224,7 @@
   });
 </script>
 
+
 </html>
 
 
-<!-- <div class="dialog">
-   content here
-</div>
-<div class="overlay"></div> -->

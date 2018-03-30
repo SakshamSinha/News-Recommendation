@@ -52,7 +52,7 @@ class NewsModel(models.Model):
 class NewsProfileModel(models.Model):
     """News Profile model"""
 
-    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name="user")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     news = models.ForeignKey(NewsModel, on_delete=models.CASCADE, related_name="news")
     show_more = models.BooleanField(default=False)
     relevance = models.BooleanField(default=False)

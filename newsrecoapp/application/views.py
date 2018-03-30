@@ -18,7 +18,7 @@ from django.core import serializers
 from application import dbops
 from application import forms
 from application import models
-from application.models import NewsModel
+from application.models import NewsModel, NewsProfileModel
 
 import json
 
@@ -113,6 +113,21 @@ class AjaxPosts(TemplateView):
 			context =  {'Latest_news_list': Latest_news_list}
 			data = serializers.serialize('json', Latest_news_list)
 			return HttpResponse(data, content_type='application/json')
+		else:
+			message = "fail"
+			return HttpResponse(message)
+
+	def updateNewsShowMore(request):
+		if(request.is_ajax):
+			#Exists?
+			newsObject = NewsProfileModel.objects.filter(news = request.POST['newsId']).first()
+			if newsObject is None:
+				newsModelObj = NewsModel.objects.filter(id=request.POST['newsId']).get()
+				newsObject = NewsProfileModel.objects.create(user=request.user, news=newsModelObj, show_more=request.POST['showMore'])
+				newsObject.save()
+			else:
+				newsObject.showMore = request.POST['showMore']
+				newsObject.save()
 		else:
 			message = "fail"
 			return HttpResponse(message)
