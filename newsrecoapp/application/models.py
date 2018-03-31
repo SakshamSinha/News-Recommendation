@@ -5,6 +5,7 @@ from datetime import datetime
 from django.utils import timezone
 
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -34,6 +35,11 @@ class UserStaticPrefs(models.Model):
     arts = models.BooleanField(default=False)
     sports = models.BooleanField(default=False)
     misc = models.BooleanField(default=False)
+    dy_economy = models.FloatField(default=0.0)
+    dy_politics = models.FloatField(default=0.0)
+    dy_science = models.FloatField(default=0.0)
+    dy_arts = models.FloatField(default=0.0)
+    dy_sports = models.FloatField(default=0.0)
 
 
 class NewsModel(models.Model):
@@ -52,7 +58,8 @@ class NewsModel(models.Model):
 class NewsProfileModel(models.Model):
     """News Profile model"""
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
-    news = models.ForeignKey(NewsModel, on_delete=models.CASCADE, related_name="news")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user")
+    news = models.ForeignKey("NewsModel", on_delete=models.CASCADE, related_name="news")
     show_more = models.BooleanField(default=False)
     relevance = models.BooleanField(default=False)
+
