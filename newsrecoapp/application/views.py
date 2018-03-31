@@ -34,14 +34,15 @@ class HomePageView(TemplateView):
 class BrowseView(TemplateView):
     def get(request):
         # default dictionary to be overwritten when ranking logic is implemented
-        percentages = {'economy': 5, 'politics': 5, 'science': 5, 'sport': 5, 'art': 5, 'misc':5 }
+        percentages = ranking(request.user)
+        #percentages = {'economy': 5, 'politics': 5, 'science': 5, 'sport': 5, 'art': 5, 'misc':5 }
         Latest_news_list = NewsModel.objects.order_by('-published_at')
         total_length = len(Latest_news_list)
         for key, value in percentages.items():
             percentages[key] = (total_length * value) / 100
         # sort
         sorted_percentages = sorted(percentages.items(), key=lambda x: x[1], reverse=True)
-        print(sorted_percentages)
+        #print(sorted_percentages)
         all_news = []
         temp0 = NewsModel.objects.filter(categories__contains=sorted_percentages[0][0]).order_by('-published_at')[
                 :sorted_percentages[0][1]]
@@ -227,6 +228,51 @@ def select_category(user_prefs_object, category, weight):
 		if "sport" in category:
 			user_prefs_object.dy_sports = user_prefs_object.dy_sports + weight
 	return user_prefs_object
+
+def ranking(user):
+	print(user)
+	user_prefs_object = UserStaticPrefs.objects.filter(profileof_user=user).first()
+	user_cat_prefs = {}
+
+	if user_prefs_object is None:
+		value = 100/6
+		ranking = {"economy": value, "arts": value, "politics": value, "science": value, "sport": value, "misc": value}
+	else:
+		user_cat_prefs["economy"] = user_prefs_object.dy_economy
+		user_cat_prefs["arts"] = user_prefs_object.dy_arts
+		user_cat_prefs["politics"] = user_prefs_object.dy_politics
+		user_cat_prefs["science"] = user_prefs_object.dy_science
+		user_cat_prefs["sport"] = user_prefs_object.dy_sports
+
+		ranking = {"economy": 5, "arts": 5, "politics": 5, "science": 5, "sport": 5, "misc": 5}
+		user_cat_prefs_100 = {}
+		user_cat_prefs_70 = {}
+
+		total_prefs = 0
+		for key, value in user_cat_prefs.items():
+			total_prefs = total_prefs + value
+
+		if total_prefs == 0:
+			for key, value in ranking.items():
+				ranking[key] = 100 / len(ranking)
+
+		else:
+			for key, value in user_cat_prefs.items():
+				user_cat_prefs_100[key] = (value / total_prefs) * 100
+
+			# mapping to 70%
+			for key, value in user_cat_prefs_100.items():
+				user_cat_prefs_70[key] = (value / 100) * 70
+
+			for key, value in user_cat_prefs_70.items():
+				ranking[key] = ranking[key] + value
+
+		# print(user_cat_prefs_100)
+		# print(user_cat_prefs_70)
+	
+	print(ranking)
+	return ranking
+
 
 
 
