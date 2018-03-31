@@ -42,7 +42,7 @@ color:blue;
         
         <a class="news-link" id={{news.id}} href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-         <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+         <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
         </li>        
         {% endfor %}
       </ul>
@@ -62,7 +62,7 @@ color:blue;
         
         <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+             <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
 
 
 
@@ -85,7 +85,7 @@ color:blue;
         
         <a href={{ news.url }} target="_blank">>{{ news.title }}</a>
         <p> {{news.description}}</p>
-             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+             <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
 
 
 
@@ -107,7 +107,7 @@ color:blue;
         
         <a href={{ news.url }} target="_blank">>{{ news.title }}</a>
         <p> {{news.description}}</p>
-             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+             <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
 
 
 
@@ -129,7 +129,7 @@ color:blue;
         
         <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+             <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
 
 
 
@@ -151,7 +151,7 @@ color:blue;
         
         <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+             <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
 
 
 
@@ -173,7 +173,7 @@ color:blue;
         
         <a href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
-             <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+             <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
 
 
 
@@ -189,7 +189,20 @@ color:blue;
 
 <script type="text/javascript">
 
-    function myfunction(x){
+    function myfunction(news_id){
+      console.log("inside");
+      $.ajax({
+        type:"POST",
+        url:"/relevance/",
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          news_id: news_id,
+          relevance: 1
+        },
+        success: function(data){
+          console.log("Success");
+        }
+      });
 
     }
 

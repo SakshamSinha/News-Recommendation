@@ -137,3 +137,21 @@ class AjaxPosts(TemplateView):
 		else:
 			message = "fail"
 			return HttpResponse(message)
+
+	def update_relevance(request):
+		if (request.is_ajax):
+			message = "success"
+			news_id = request.POST.get('news_id')
+			relevance = request.POST.get('relevance')
+			news_profile_object = NewsProfileModel.objects.filter(news=news_id).first()
+			if news_profile_object is None:
+				news_model_object = NewsModel.objects.get(id=news_id)
+				news_profile_object = NewsProfileModel.objects.create(user=request.user, news=news_model_object,
+																	  relevance=relevance)
+			else:
+				news_profile_object.relevance = relevance
+			news_profile_object.save()
+
+		else:
+			message = "fail"
+		return HttpResponse(message)

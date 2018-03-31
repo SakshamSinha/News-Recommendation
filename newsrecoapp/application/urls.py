@@ -17,5 +17,6 @@ urlpatterns = [
    	url(r'^browse$', views.BrowseView.get, name="browse"),
 
    	url(r'^testAjax/$', views.AjaxPosts.testpost, name="testAjax"),
-   	url(r'^updateShowMore/$', views.AjaxPosts.updateNewsShowMore, name="updateShowMore")
+   	url(r'^updateShowMore/$', views.AjaxPosts.updateNewsShowMore, name="updateShowMore"),
+    url(r'^relevance/$', views.AjaxPosts.update_relevance, name="updateRelevance")
 ]
