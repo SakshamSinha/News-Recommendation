@@ -46,9 +46,9 @@
       <ul>
         {% for news in all_news %}
         <li>
-        <a href={{ news.url }} target="_blank">{{ news.title }} </a>
+        <a href={{ news.url }} target="_blank">{{ news.title }} {{news.categories}} </a>
         <p> {{news.description}}</p>
-         <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
+         <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
         </li>
 
         {% endfor %}
@@ -56,4 +56,41 @@
     </div>
 
 </body>
+<script type="text/javascript">
+
+    function myfunction(news_id){
+      console.log("inside");
+      $.ajax({
+        type:"POST",
+        url:"/relevance/",
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          news_id: news_id,
+          relevance: 1
+        },
+        success: function(data){
+          console.log("Success");
+        }
+      });
+
+    }
+
+  $(document).ready(function() {
+    $(".news-link").click(function(event){
+    //event.preventDefault();
+      $.ajax({
+        type:"POST",
+        url:"/updateShowMore/",
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          newsId: event.target.id,
+          showMore: 1
+        },
+        success: function(data){
+        }
+      });
+    });
+    return false;
+  });
+</script>
 </html>
