@@ -19,12 +19,6 @@
     color:blue;
         }
     </Style>
-    <script language='javascript'>
-    function happycode(){
-        alert("{{news.categories}}");
-    }
-    </script>
-}
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -46,32 +40,38 @@
       <ul>
         {% for news in all_news %}
         <li>
-        <a href={{ news.url }} target="_blank">{{ news.title }} {{news.categories}} </a>
-        <p> {{news.description}}</p>
-         <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
+            <a id="news" href={{ news.url }} target="_blank">{{ news.title }}</a>
+            <p> {{news.description}}</p>
+            <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <p>
+                {% for category in news.categories %}
+                    <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;{{ category }}</button>
+                {% endfor %}
+            </p>
         </li>
-
         {% endfor %}
       </ul>
     </div>
 
 </body>
-<script type="text/javascript">
 
-    function myfunction(news_id){
-      console.log("inside");
-      $.ajax({
-        type:"POST",
-        url:"/relevance/",
-        data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}',
-          news_id: news_id,
-          relevance: 1
-        },
-        success: function(data){
-          console.log("Success");
-        }
-      });
+
+<script type="text/javascript">
+    function myfunction(news_id) {
+        console.log("inside");
+        $.ajax({
+            type: "POST",
+            url: "/relevance/",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                news_id: news_id,
+                relevance: 1
+            },
+            success: function (data) {
+                console.log("Success");
+            }
+        });
 
     }
 

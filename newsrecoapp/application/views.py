@@ -23,7 +23,7 @@ from application.models import NewsModel, NewsProfileModel,UserStaticPrefs
 import json
 from itertools import chain
 from django.db.models import Q
-import pdb
+import re
 
 # Create your views here.
 
@@ -33,41 +33,47 @@ class HomePageView(TemplateView):
 
 class BrowseView(TemplateView):
     def get(request):
-        # default dictionary to be overwritten when ranking logic is implemented
-        percentages = ranking(request.user)
-        #percentages = {'economy': 5, 'politics': 5, 'science': 5, 'sport': 5, 'art': 5, 'misc':5 }
-        Latest_news_list = NewsModel.objects.order_by('-published_at')
-        total_length = len(Latest_news_list)
-        for key, value in percentages.items():
-            percentages[key] = (total_length * value) / 100
-        # sort
-        sorted_percentages = sorted(percentages.items(), key=lambda x: x[1], reverse=True)
-        #print(sorted_percentages)
-        all_news = []
-        temp0 = NewsModel.objects.filter(categories__contains=sorted_percentages[0][0]).order_by('-published_at')[
-                :sorted_percentages[0][1]]
-        temp1 = NewsModel.objects.filter(categories__contains=sorted_percentages[1][0]).filter(
-            ~Q(categories__contains=sorted_percentages[0][0])).order_by('-published_at')[
-                :sorted_percentages[1][1]]
-        temp2 = NewsModel.objects.filter(categories__contains=sorted_percentages[2][0]).filter(
-            ~Q(categories__contains=sorted_percentages[0][0])).filter(
-            ~Q(categories__contains=sorted_percentages[1][0])).order_by('-published_at')[
-                :sorted_percentages[2][1]]
-        temp3 = NewsModel.objects.filter(categories__contains=sorted_percentages[3][0]).filter(
-            ~Q(categories__contains=sorted_percentages[0][0])).filter(
-            ~Q(categories__contains=sorted_percentages[1][0])).filter(
-            ~Q(categories__contains=sorted_percentages[2][0])).order_by('-published_at')[
-                :sorted_percentages[3][1]]
-        temp4 = NewsModel.objects.filter(categories__contains=sorted_percentages[4][0]).filter(
-            ~Q(categories__contains=sorted_percentages[0][0])).filter(
-            ~Q(categories__contains=sorted_percentages[1][0])).filter(
-            ~Q(categories__contains=sorted_percentages[2][0])).filter(
-            ~Q(categories__contains=sorted_percentages[3][0])).order_by('-published_at')[
-                :sorted_percentages[4][1]]
-        misc_news = NewsModel.objects.filter(categories__contains=sorted_percentages[5][0]).order_by('-published_at')[
-                :sorted_percentages[5][1]]
-        all_news = list(chain(temp0, temp1, temp2, temp3, temp4, misc_news))
-        return render(request, 'mainpage.html', {'all_news': all_news})
+		# default dictionary to be overwritten when ranking logic is implemented
+		percentages = ranking(request.user)
+		# percentages = {'economy': 5, 'politics': 5, 'science': 5, 'sport': 5, 'art': 5, 'misc':5 }
+		Latest_news_list = NewsModel.objects.order_by('-published_at')
+		total_length = len(Latest_news_list)
+		for key, value in percentages.items():
+			percentages[key] = (total_length * value) / 100
+		# sort
+		sorted_percentages = sorted(percentages.items(), key=lambda x: x[1], reverse=True)
+		# print(sorted_percentages)
+		all_news = []
+		temp0 = NewsModel.objects.filter(categories__contains=sorted_percentages[0][0]).order_by('-published_at')[
+				:sorted_percentages[0][1]]
+		temp1 = NewsModel.objects.filter(categories__contains=sorted_percentages[1][0]).filter(
+			~Q(categories__contains=sorted_percentages[0][0])).order_by('-published_at')[
+				:sorted_percentages[1][1]]
+		temp2 = NewsModel.objects.filter(categories__contains=sorted_percentages[2][0]).filter(
+			~Q(categories__contains=sorted_percentages[0][0])).filter(
+			~Q(categories__contains=sorted_percentages[1][0])).order_by('-published_at')[
+				:sorted_percentages[2][1]]
+		temp3 = NewsModel.objects.filter(categories__contains=sorted_percentages[3][0]).filter(
+			~Q(categories__contains=sorted_percentages[0][0])).filter(
+			~Q(categories__contains=sorted_percentages[1][0])).filter(
+			~Q(categories__contains=sorted_percentages[2][0])).order_by('-published_at')[
+				:sorted_percentages[3][1]]
+		temp4 = NewsModel.objects.filter(categories__contains=sorted_percentages[4][0]).filter(
+			~Q(categories__contains=sorted_percentages[0][0])).filter(
+			~Q(categories__contains=sorted_percentages[1][0])).filter(
+			~Q(categories__contains=sorted_percentages[2][0])).filter(
+			~Q(categories__contains=sorted_percentages[3][0])).order_by('-published_at')[
+				:sorted_percentages[4][1]]
+		misc_news = NewsModel.objects.filter(categories__contains=sorted_percentages[5][0]).order_by('-published_at')[
+					:sorted_percentages[5][1]]
+		all_news = list(chain(temp0, temp1, temp2, temp3, temp4, misc_news))
+		# pdb.set_trace()
+		for news in all_news:
+			news.categories = re.sub(r'^{', '', news.categories)
+			news.categories = re.sub(r'\}$', '', news.categories)
+			news.categories = news.categories.split('\',\'')
+			news.categories = [cat.replace('\'', '') for cat in news.categories]
+		return render(request, 'mainpage.html', {'all_news': all_news})
 
 class UserRegView(TemplateView):
 	def get(self, request, **kwargs):
@@ -269,7 +275,7 @@ def ranking(user):
 
 		# print(user_cat_prefs_100)
 		# print(user_cat_prefs_70)
-	
+
 	print(ranking)
 	return ranking
 
