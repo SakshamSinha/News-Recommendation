@@ -40,7 +40,7 @@ color:blue;
         {% for news in economy %}
         <li>
         
-        <a href={{ news.url }} target="_blank">{{ news.title }}</a>
+        <a class="news-link" id={{news.id}} href={{ news.url }} target="_blank">{{ news.title }}</a>
         <p> {{news.description}}</p>
          <i onclick = "myfunction(this)" class="fa fa-thumbs-up"></i>
         </li>        
@@ -194,8 +194,8 @@ color:blue;
     }
 
   $(document).ready(function() {
-    $(".see-more-button").click(function(event){
-    event.preventDefault();
+    $(".news-link").click(function(event){
+    //event.preventDefault();
       $.ajax({
         type:"POST",
         url:"/updateShowMore/",
@@ -205,18 +205,6 @@ color:blue;
           showMore: 1
         },
         success: function(data){
-          /*$("#economy ul").empty();
-          var i;
-          for(i=0; i<data.length; i++){
-            var title = "<li><a href=\"\">" + data[i].fields.title + "</a>";
-            var description = "<p>" + data[i].fields.description + "</p>";
-            var button = "<button class=\"see-more-button\">See More</button></li>";
-
-            $("#economy ul").append(title,description,button);
-          }*/
-
-
-          alert(event.target.id);
         }
       });
     });

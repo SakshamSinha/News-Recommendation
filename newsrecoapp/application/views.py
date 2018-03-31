@@ -120,14 +120,20 @@ class AjaxPosts(TemplateView):
 	def updateNewsShowMore(request):
 		if(request.is_ajax):
 			#Exists?
-			newsObject = NewsProfileModel.objects.filter(news = request.POST['newsId']).first()
+			newsObject = NewsProfileModel.objects.filter(user=request.user.id, news = request.POST['newsId']).first()
 			if newsObject is None:
-				newsModelObj = NewsModel.objects.filter(id=request.POST['newsId']).get()
-				newsObject = NewsProfileModel.objects.create(user=request.user, news=newsModelObj, show_more=request.POST['showMore'])
+				news = NewsModel.objects.filter(id=request.POST['newsId']).first()
+				user = User.objects.filter(id=request.user.id).first()
+
+				newsObject = NewsProfileModel(user=user, news=news, show_more=request.POST['showMore'])
+				print(newsObject.user, " : ", newsObject.news)
 				newsObject.save()
+
+				return HttpResponse("new NewsProfileModel created")
 			else:
-				newsObject.showMore = request.POST['showMore']
+				newsObject.show_more = request.POST['showMore']
 				newsObject.save()
+				return HttpResponse("Existing NewsProfileModel updated")
 		else:
 			message = "fail"
 			return HttpResponse(message)
