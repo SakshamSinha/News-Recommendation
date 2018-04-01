@@ -28,11 +28,11 @@ import re
 # Create your views here.
 
 class HomePageView(TemplateView):
-    def get(self, request, **kwargs):
-        return render(request, 'index.html', context=None)
+	def get(self, request, **kwargs):
+		return render(request, 'index.html', context=None)
 
 class BrowseView(TemplateView):
-    def get(request):
+	def get(request):
 		# default dictionary to be overwritten when ranking logic is implemented
 		percentages = ranking(request.user)
 		# percentages = {'economy': 5, 'politics': 5, 'science': 5, 'sport': 5, 'art': 5, 'misc':5 }

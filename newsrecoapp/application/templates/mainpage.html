@@ -40,7 +40,7 @@
       <ul>
         {% for news in all_news %}
         <li>
-            <a id="news" href={{ news.url }} target="_blank">{{ news.title }}</a>
+            <a id="{{ news.id }}" class="news-link" href={{ news.url }} target="_blank">{{ news.title }}</a>
             <p> {{news.description}}</p>
             <i onclick = "myfunction({{ news.id }})" class="fa fa-thumbs-up"></i>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
