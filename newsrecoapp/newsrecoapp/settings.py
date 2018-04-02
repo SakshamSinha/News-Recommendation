@@ -124,7 +124,8 @@ CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
 STATIC_URL = '/static/'
 
 # Login redirect
-LOGIN_REDIRECT_URL = '/registration/success'
+LOGIN_REDIRECT_URL = '/browse'
+LOGOUT_REDIRECT_URL = "/login"
 
 #Extended User w/ Profile
 AUTH_PROFILE_MODULE = 'application.profile'

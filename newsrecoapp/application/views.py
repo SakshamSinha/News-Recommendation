@@ -106,13 +106,13 @@ class UserRegView(TemplateView):
 
 				user = authenticate(username=username, password=raw_password)
 				login(request, user)
-				return redirect('../registration/success')
+				return redirect('../browse')
 		else:
 			form = UserCreationForm()
 		return render(request, 'registration/signup.html', {'form': form})
 
 	def success(request):
-		return render(request, 'registration/success.html', context=None)
+		return redirect('../browse') #render(request, 'index.html', context=None)
 
 @login_required
 @transaction.atomic
@@ -125,7 +125,7 @@ def update_profile(request):
 			models.UserStaticPrefs.objects.filter(profileof_user = request.user.id).delete()
 			userstaticprefs.save()
 			update_static_user_prefs(request.user)
-			return render(request, 'registration/success.html', context=None)
+			return redirect("/browse") #render(request, 'index.html', context=None)
 		else:
 			messages.error(request, _('Please correct the error below.'))
 	else:
