@@ -124,6 +124,7 @@ def update_profile(request):
 			userstaticprefs.profileof_user = request.user
 			models.UserStaticPrefs.objects.filter(profileof_user = request.user.id).delete()
 			userstaticprefs.save()
+			update_static_user_prefs(request.user)
 			return render(request, 'registration/success.html', context=None)
 		else:
 			messages.error(request, _('Please correct the error below.'))
@@ -208,6 +209,22 @@ def update_user_prefs(user, show_more, relevance, category):
 	else:
 		print("inside else")
 		user_prefs_object = select_category(user_prefs_object, category, weight_TF)
+	user_prefs_object.save()
+
+def update_static_user_prefs(user):
+	user_prefs_object = UserStaticPrefs.objects.filter(profileof_user=user).first()
+	weight_cat = 0.5
+	if int(user_prefs_object.economy) == 1:
+		user_prefs_object = select_category(user_prefs_object, "economy", weight_cat)
+	if int(user_prefs_object.politics) == 1:
+		user_prefs_object = select_category(user_prefs_object, "politics", weight_cat)
+	if int(user_prefs_object.science) == 1:
+		user_prefs_object = select_category(user_prefs_object, "science", weight_cat)
+	if int(user_prefs_object.arts) == 1:
+		user_prefs_object = select_category(user_prefs_object, "arts", weight_cat)
+	if int(user_prefs_object.sports) == 1:
+		user_prefs_object = select_category(user_prefs_object, "sport", weight_cat)
+
 	user_prefs_object.save()
 
 def select_category(user_prefs_object, category, weight):
