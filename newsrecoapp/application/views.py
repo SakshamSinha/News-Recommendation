@@ -106,7 +106,7 @@ class UserRegView(TemplateView):
 
 				user = authenticate(username=username, password=raw_password)
 				login(request, user)
-				return redirect('../browse')
+				return redirect('../registration/profile')
 		else:
 			form = UserCreationForm()
 		return render(request, 'registration/signup.html', {'form': form})
