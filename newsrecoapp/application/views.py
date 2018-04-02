@@ -162,12 +162,19 @@ class AjaxPosts(TemplateView):
 				newsObject = NewsProfileModel(user=user, news=news, show_more=request.POST['showMore'])
 				print(newsObject.user, " : ", newsObject.news)
 				newsObject.save()
+				print(newsObject.show_more)
+				print(newsObject.relevance)
+				update_user_prefs(request.user, newsObject.show_more, newsObject.relevance, newsObject.news.categories)
 
 				return HttpResponse("new NewsProfileModel created")
 			else:
 				newsObject.show_more = request.POST['showMore']
 				newsObject.save()
+				print(newsObject.show_more)
+				print(newsObject.relevance)
+				update_user_prefs(request.user, newsObject.show_more, newsObject.relevance, newsObject.news.categories)
 				return HttpResponse("Existing NewsProfileModel updated")
+
 		else:
 			message = "fail"
 			return HttpResponse(message)
