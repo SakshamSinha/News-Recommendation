@@ -68,12 +68,18 @@ class BrowseView(TemplateView):
 					:sorted_percentages[5][1]]
 		all_news = list(chain(temp0, temp1, temp2, temp3, temp4, misc_news))
 		# pdb.set_trace()
+		seen={}
+		corrected_news=[]
 		for news in all_news:
+			if news.title not in seen.keys():
+				seen[news.title]=1
+				corrected_news.append(news)
+		for news in corrected_news:
 			news.categories = re.sub(r'^{', '', news.categories)
 			news.categories = re.sub(r'\}$', '', news.categories)
 			news.categories = news.categories.split('\',\'')
 			news.categories = [cat.replace('\'', '') for cat in news.categories]
-		return render(request, 'mainpage.html', {'all_news': all_news})
+		return render(request, 'mainpage.html', {'all_news': corrected_news})
 
 class UserRegView(TemplateView):
 	def get(self, request, **kwargs):
